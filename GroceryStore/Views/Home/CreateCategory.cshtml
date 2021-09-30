@@ -1,0 +1,36 @@
+﻿@model GroceryStore.Models.other.CreateCategory
+
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+
+
+<div class="form-page">
+    <h1 class="heading">Create New Category</h1>
+    <div class="form">
+        <form enctype="multipart/form-data" asp-action="CreateCategory" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="input-error"></div>
+            <div>
+                <input asp-for="CategoryTitle" placeholder="Category Title" />
+                <span asp-validation-for="CategoryTitle" class="input-error"></span>
+            </div>
+
+            <div>
+
+                <input asp-for="CategoryPicture" placeholder="password" />
+                <span asp-validation-for="CategoryPicture" class="input-error"></span>
+            </div>
+
+            <div>
+
+                <input asp-for="Offer" placeholder="Offer" min="5" max="100" />
+                <span asp-validation-for="Offer" class="input-error"></span>
+            </div>
+
+            <button>login</button>
+            @*<p class="message">Not registered? <a href="#">Create an account</a></p>*@
+
+        </form>
+    </div>
+</div>

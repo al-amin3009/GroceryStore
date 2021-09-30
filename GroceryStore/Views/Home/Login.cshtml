@@ -1,0 +1,63 @@
+﻿@model GroceryStore.Models.Admin
+
+@{
+    ViewData["Title"] = "Login";
+}
+@*<head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+
+    <div class="row">
+        <h1 class="text-center">Administrator Login</h1>
+        <div class="col-md-4">
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="userName" class="control-label"></label>
+                    <input asp-for="userName" class="form-control" />
+                    <span asp-validation-for="userName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="password" class="control-label"></label>
+                    <input asp-for="password" class="form-control" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-default" />
+                </div>
+                <div>
+                    <p>@ViewBag.ErrorMessage</p>
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<div class="form-page">
+    <h1 class="heading">Administrator login</h1>
+    <div class="form">
+        <form class="register-form" asp-action="Login">
+            <div>
+
+                <input asp-for="userName" placeholder="username" />
+                <span asp-validation-for="userName" class="input-error"></span>
+            </div>
+            <div>
+
+                <input asp-for="password" placeholder="password" />
+                <span asp-validation-for="password" class="input-error"></span>
+            </div>
+            <button>login</button>
+            @*<p class="message">Not registered? <a href="#">Create an account</a></p>*@
+
+            <div>
+                <p class="error-message">@ViewBag.ErrorMessage</p>
+            </div>
+
+            <p class="message">Already registered? <a href="#">Sign In</a></p>
+
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Grocery Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GroceryStore</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+
+    <!--  ================  Header  ==============  -->
+    <header>
+        <div class="header-1">
+            <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-shopping-basket"></i>groco</a>
+            <form action="" class="search-box-container">
+                <input type="search" id="search-box" placeholder="Search here....">
+                <label for="search-box" class="fa fa-search"></label>
+            </form>
+        </div>
+
+        <div class="header-2">
+            <div id="menu-bar" class="fas fa-bars">
+
+            </div>
+            <nav class="navbars">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-area="" asp-controller="Home" asp-action="Category">category</a>
+                <a href="#product">product</a>
+                <a href="#deal">deal</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="icons">
+                <a href="#" class="fas fa-shopping-cart"></a>
+                <a href="#" class="fas fa-heart"></a>
+                @if (UserLogin.IsLogin == false)
+                {
+                    <a asp-controller="Home" asp-action="Login" class="fas fa-user-circle"></a>
+                }
+                else
+                {
+                    <a asp-controller="User" asp-action="Index" class="fas fa-user-circle"></a>
+                }
+            </div>
+        </div>
+    </header>
+
+
+
+
+    @RenderBody()
+
+
+
+    <section class="footer">
+
+        <div class="box-container">
+            <div class="box">
+                <a href="#" class="logo"><i class="fas fa-shopping-basket"></i>groco</a>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae quae accusantium rerum alias ad nobis labore, accusamus eos autem vero!</p>
+                <div class="share">
+                    <a href="#" class="button fab fa-facebook"></a>
+                    <a href="#" class="button fab fa-twitter"></a>
+                    <a href="#" class="button fab fa-instagram"></a>
+                    <a href="#" class="button fab fa-linkedin"></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>Our location</h3>
+                <div class="links">
+                    <a href="#">india</a>
+                    <a href="#">USA</a>
+                    <a href="#">france</a>
+                    <a href="#">japan</a>
+                    <a href="#">russia</a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>quick links</h3>
+                <div class="links">
+                    <a href="#">home</a>
+                    <a href="#">category</a>
+                    <a href="#">products</a>
+                    <a href="#">deal</a>
+                    <a href="#">contact</a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>download app</h3>
+                <div class="links">
+                    <a href="#">google play</a>
+                    <a href="#">window xp</a>
+                    <a href="#">app stores</a>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="credit"> create by <span> mr. abcd efgh </span> | all rights reserved </h1>
+
+    </section>
+
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - GroceryStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+    <script src="~/js/script.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
