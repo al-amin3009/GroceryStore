@@ -24,36 +24,42 @@
     <h1 class="heading">shop by <span>category</span></h1>
 
     <div class="box-container">
-        <div class="box">
-            <h3>vegetables</h3>
-            <p>upto 50% off</p>
-            <img src="images/home.png" alt="">
-            <a href="#" class="button">shop now</a>
-        </div>
+        @{
+            var count = 0;
+        }
 
-        <div class="box">
-            <h3>juice</h3>
-            <p>upto 44% off</p>
-            <img src="images/home.png" alt="">
-            <a href="#" class="button">shop now</a>
-        </div>
+        @foreach (var category in ViewBag.categories)
+        {
+            <div class="box">
+                <h3>@category.CategoryTitle</h3>
+                @if (category.Offer > 0)
+                {
+                    <p>upto @category.Offer% off</p>
+                }
+                else
+                {
+                    <p>Click for details</p>
+                }
 
-        <div class="box">
-            <h3>meat</h3>
-            <p>upto 35% off</p>
-            <img src="images/home.png" alt="">
-            <a href="#" class="button">shop now</a>
-        </div>
+                <img src="~/images/category/@category.CategoryPicture" alt="@category.CategoryTitle">
+                <a asp-action="Products" asp-route-id="@category.Id" class="button">shop now</a>
+            </div>
 
-        <div class="box">
-            <h3>fruits</h3>
-            <p>upto 12% off</p>
-            <img src="images/home.png" alt="">
-            <a href="#" class="button">shop now</a>
-        </div>
+            if (count == 4)
+            {
+                break;
+            }
+            else
+            {
+                count++;
+            }
+        }
 
 
 
+    </div>
+    <div class="more">
+        <a asp-controller="Home" asp-action="Category" class="button ">See More</a>
     </div>
 
 </section>
@@ -67,232 +73,68 @@
 
     <div class="box-container">
 
-        <div class="box">
-            <span class="discount">-33%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/product-1.jpg" alt="">
-            <h3>organic banana</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
+        @{ 
+            count = 0;
+        }
 
-        <div class="box">
-            <span class="discount">-33%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/product-2.jpg" alt="">
-            <h3>organic tomatos</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
+        @foreach (var products in ViewBag.products)
+        {
+            <div class="box">
+                @if (products.Offer > 0)
+                {
+                    <span class="discount">-@products.Offer%</span>
+                }
+                <div class="icons">
+                    <a href="#" class="fas fa-heart"></a>
+                    <a href="#" class="fas fa-share"></a>
+                    <a href="#" class="fas fa-eye"></a>
+                </div>
+                <img src="~/images/products/@products.Picture" alt="">
+                <h3>@products.Title</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                @if (products.Offer == 0)
+                {
+                    <div class="price"> @products.Price </div>
+                }
+                else
+                {
 
-        <div class="box">
-            <span class="discount">-52%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/product-3.jpg" alt="">
-            <h3>organic orange</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
+                    var offer = products.Price * products.Offer / 100;
+                    var offerPrice = products.Price - offer;
 
-        <div class="box">
-            <span class="discount">-13%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/product-4.jpg" alt="">
-            <h3>natural mild</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
+                    <div class="price"> @offerPrice <span> $@products.Price </span></div>
+                }
 
-        <div class="box">
-            <span class="discount">-20%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <div class="quantity">
+                    <span>quantity : </span>
+                    <input type="number" min="1" max="1000" value="1">
+                    <span> /kg </span>
+                </div>
+                <a href="#" class="button">Add to cart</a>
             </div>
-            <img src="images/home.png" alt="">
-            <h3>organic grapes</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
 
-        <div class="box">
-            <span class="discount">-29%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/home.png" alt="">
-            <h3>natural almonts</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
+            @if(count == 8)
+            {
+                break;
+            }
+            else
+            {
+                count++;
+            }
+        }
 
-        <div class="box">
-            <span class="discount">-59%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/home.png" alt="">
-            <h3>natual apple</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
-
-        <div class="box">
-            <span class="discount">-33%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/home.png" alt="">
-            <h3>natural butter</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
-
-        <div class="box">
-            <span class="discount">-33%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="images/home.png" alt="">
-            <h3>natural carrots</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
 
     </div>
+    <div class="more">
+        <a  asp-controller="Home" asp-action="Products" asp-route-id="" class="button ">See More</a>
+    </div>
+    
 </section>
 
 <!--  ===================== Deal section starts ===============-->

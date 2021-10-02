@@ -1,0 +1,55 @@
+﻿@model GroceryStore.Models.other.CreateProducts
+
+@{
+    ViewData["Title"] = "Create Products";
+}
+
+<div class="form-page">
+    <h1 class="heading">Create New Products</h1>
+    <div class="form">
+        <form enctype="multipart/form-data" asp-action="AddProducts" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="input-error"></div>
+
+            <div>
+                <input asp-for="ProductNumber" placeholder="Product Number" />
+                <span asp-validation-for="ProductNumber" class="input-error"></span>
+            </div>
+
+            <div>
+                <input asp-for="Title" placeholder="Products Title" />
+                <span asp-validation-for="Title" class="input-error"></span>
+            </div>
+
+            <div>
+                <input asp-for="Picture" placeholder="Picture" />
+                <span asp-validation-for="Picture" class="input-error"></span>
+            </div>
+
+            <div>
+                <input asp-for="Price" placeholder="Price" />
+                <span asp-validation-for="Price" class="input-error"></span>
+            </div>
+
+            <div>
+                <input asp-for="Details" placeholder="Details" />
+                <span asp-validation-for="Details" class="input-error"></span>
+            </div>
+
+            <div>
+                <input asp-for="Offer" placeholder="Offer" min="5" max="100" />
+                <span asp-validation-for="Offer" class="input-error"></span>
+            </div>
+
+            <div>
+                <select asp-for="CategoryId" asp-items="ViewBag.Categorielist" required>
+                    <option value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="input-error"></span>
+            </div>
+
+            <button>login</button>
+            @*<p class="message">Not registered? <a href="#">Create an account</a></p>*@
+
+        </form>
+    </div>
+</div>

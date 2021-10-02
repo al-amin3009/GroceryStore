@@ -4,27 +4,30 @@
 }
 
 
-@*@if (UserLogin.IsLogin == true)
-    {
-        <div class="create">
-            <a asp-controller="Home" asp-action="CreateCategory" class="button">Create Category</a>
-        </div>
-    }*@
-<div class="create">
-    <a asp-controller="Home" asp-action="CreateProducts" class="button">Create New Products</a>
-</div>
+@if (UserLogin.IsLogin == true)
+{
+    <div class="create">
+        <a asp-controller="Home" asp-action="AddProducts" class="button">Create New Products</a>
+    </div>
+ }
+@*<div class="create">
+    <a asp-controller="Home" asp-action="AddProducts" class="button">Create New Products</a>
+</div>*@
 
 
 
 
 <section class="product" id="product">
     <h1 class="heading">Latest <span>@ViewBag.Title</span></h1>
-    <h3 class="heading">@ViewData["Title"]</h3>
+
     <div class="box-container">
         @foreach (var products in Model)
         {
             <div class="box">
-                <span class="discount">-@products.Offer%</span>
+                @if (products.Offer > 0)
+                {
+                    <span class="discount">-@products.Offer%</span>
+                }
                 <div class="icons">
                     @if (UserLogin.IsLogin)
                     {
@@ -35,7 +38,7 @@
                     <a href="#" class="fas fa-share"></a>
                     <a href="#" class="fas fa-eye"></a>
                 </div>
-                <img src="~/images/@products.Picture" alt="">
+                <img src="~/images/products/@products.Picture" alt="">
                 <h3>@products.Title</h3>
                 <div class="stars">
                     <i class="fas fa-star"></i>
@@ -44,7 +47,19 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
                 </div>
-                <div class="price"> @products.Price <span> $13.20 </span></div>
+                @if (products.Offer == 0)
+                {
+                    <div class="price"> @products.Price </div>
+                }
+                else
+                {
+
+                    var offer = products.Price * products.Offer / 100;
+                    var offerPrice = products.Price - offer;
+
+                    <div class="price"> @offerPrice <span> $@products.Price </span></div>
+                }
+
                 <div class="quantity">
                     <span>quantity : </span>
                     <input type="number" min="1" max="1000" value="1">
@@ -52,57 +67,7 @@
                 </div>
                 <a href="#" class="button">Add to cart</a>
             </div>
-         }
-
-        <div class="box">
-            <span class="discount">-33%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="~/images/product-1.jpg" alt="">
-            <h3>organic banana</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
-
-        <div class="box">
-            <span class="discount">-33%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
-            </div>
-            <img src="~/images/product-1.jpg" alt="">
-            <h3>organic banana</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> $10.50 <span> $13.20 </span></div>
-            <div class="quantity">
-                <span>quantity : </span>
-                <input type="number" min="1" max="1000" value="1">
-                <span> /kg </span>
-            </div>
-            <a href="#" class="button">Add to cart</a>
-        </div>
+        }
 
     </div>
 </section>

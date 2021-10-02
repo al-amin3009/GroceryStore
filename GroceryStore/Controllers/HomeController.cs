@@ -3,6 +3,7 @@ using GroceryStore.Models;
 using GroceryStore.Models.other;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,6 +30,12 @@ namespace GroceryStore.Controllers
         //Get Home Index
         public IActionResult Index()
         {
+
+            ViewBag.categories = _context.Category
+                                        .ToList();
+
+            ViewBag.products = _context.Products.ToList();
+
             return View();
         }
 
@@ -201,22 +208,21 @@ namespace GroceryStore.Controllers
         // GET products
         public async Task<IActionResult> Products(int? id)
         {
-            var category = await _context.Category
-                                   .Where(c => c.Id == id)
-                                   .AsNoTracking()
-                                   .FirstOrDefaultAsync();
-            if (category == null)
-                return NotFound();
-
-            ViewBag.Title = category.Id;
-            ViewData["Title"] = category.CategoryTitle;
-
             var products = await _context.Products
                             .AsNoTracking()
                             .ToListAsync();
 
             if(id != null) 
             {
+                var category = await _context.Category
+                                   .Where(c => c.Id == id)
+                                   .AsNoTracking()
+                                   .FirstOrDefaultAsync();
+                if (category == null)
+                    return NotFound();
+
+                ViewBag.Title = category.CategoryTitle;
+
                 products = await _context.Products
                             .AsNoTracking()
                             .Where(x => x.Id == id)
@@ -226,6 +232,64 @@ namespace GroceryStore.Controllers
             return View(products.ToList());
         }
 
+        public IActionResult AddProducts()
+        {
+            PopulateMenuDropDownList();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddProducts([Bind("ProductNumber, Title, Picture, Price, Details, Offer, CategoryId")] CreateProducts model)
+        {
+            if(ModelState.IsValid)
+            {
+                string uniqueFileName = ProcessUploadfile(model);
+
+                Products NewProducts = new Products
+                {
+                    ProductNumber = model.ProductNumber,
+                    Title = model.Title,
+                    Picture = uniqueFileName,
+                    Price = model.Price,
+                    Details = model.Details,
+                    CategoryId = model.CategoryId,
+                    Offer = model.Offer ?? 0
+                };
+                _context.Add(NewProducts);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Products", "Home");
+
+            }
+            PopulateMenuDropDownList(model.CategoryId);
+            return View(model);
+        }
+
+        private string ProcessUploadfile(CreateProducts model)
+        {
+            string uniqueFileName = null;
+
+            if (model.Picture != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/products");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Picture.FileName;
+
+                string filepath = Path.Combine(uploadsFolder, uniqueFileName);
+                using var fileStream = new FileStream(filepath, FileMode.Create);
+                model.Picture.CopyTo(fileStream);
+            }
+            return uniqueFileName;
+        }
+
+        private void PopulateMenuDropDownList(object selectedCategory = null)
+        {
+            var categories = from d in _context.Category
+                             orderby d.CategoryTitle
+                             select d;
+            ViewBag.Categorielist = new SelectList(categories.AsNoTracking(), "Id", "CategoryTitle", selectedCategory);
+        }
 
     }
 }
